@@ -99,5 +99,12 @@ class CD implements Medium
     {
         return _titel;
     }
+    
+    @Override
+    public String getFormatiertenString()
+    {
+        return "Interpret: " + this.getInterpret() + "\n" + 
+                this.getSpiellaenge() + " min" + "\n" + this.getKommentar();
+    }
 
 }

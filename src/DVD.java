@@ -102,5 +102,12 @@ class DVD implements Medium
     {
         return _titel;
     }
+    
+    @Override
+    public String getFormatiertenString()
+    {
+        return "Regisseur: " + this.getRegisseur() + "\n" + 
+                this.getLaufzeit() + " min" + "\n" + this.getKommentar();
+    }
 
 }

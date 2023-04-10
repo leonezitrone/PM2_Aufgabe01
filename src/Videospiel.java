@@ -64,7 +64,7 @@ class Videospiel implements Medium
      * 
      * @ensure result != null
      */
-    public String getPlattform()
+    public String getSystem()
     {
         return _system;
     }
@@ -80,5 +80,12 @@ class Videospiel implements Medium
     {
         return _titel;
     }
+    
+    @Override
+    public String getFormatiertenString()
+    {
+        return "System: " + this.getSystem() + "\n" + this.getKommentar();
+    }
+
 
 }

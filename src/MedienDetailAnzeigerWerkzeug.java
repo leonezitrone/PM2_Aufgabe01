@@ -32,9 +32,58 @@ class MedienDetailAnzeigerWerkzeug
     {
         assert medien != null : "Vorbedingung verletzt: (medien != null)";
         TextArea selectedMedienTextArea = _ui.getMedienAnzeigerTextArea();
-        selectedMedienTextArea.setText("");
+        String message = "";
+        
+        for (Medium medium : medien)
+        {
+            message = message + medium.getFormatiertenString();
+        }
+        
+        selectedMedienTextArea.setText(message);
     }
 
+    /**
+     * Setzt die Liste der Medien deren Details angezeigt werden sollen.
+     * 
+     * @param medien Eine Liste von Medien.
+     * 
+     * @require (medien != null)
+     */
+    /**
+    public void setMedien(List<Medium> medien)
+    {
+        assert medien != null : "Vorbedingung verletzt: (medien != null)";
+        TextArea selectedMedienTextArea = _ui.getMedienAnzeigerTextArea();
+        String message = "";
+        
+        
+        for (Medium medium : medien)
+        {
+            if (medium instanceof DVD)
+            {
+                DVD dvdMedium = (DVD)medium;
+                message = message + "Regisseur: " + dvdMedium.getRegisseur() + "\n" + 
+                        dvdMedium.getLaufzeit() + " min";
+            }
+            else if (medium instanceof CD)
+            {
+                CD cdMedium = (CD)medium;
+                message = message + "Interpret: " + cdMedium.getInterpret() + "\n" + 
+                        cdMedium.getSpiellaenge() + " min";
+            }
+            else if (medium instanceof Videospiel)
+            {
+                Videospiel videospielMedium = (Videospiel)medium;
+                message = message + "System: " + videospielMedium.getSystem() + "\n";
+                
+            }
+            message = message + "\n" + medium.getKommentar();      
+        }
+        
+        selectedMedienTextArea.setText(message);
+    }
+    */
+    
     /**
      * Gibt das Panel dieses Subwerkzeugs zurück.
      * 
