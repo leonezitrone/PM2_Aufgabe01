@@ -135,7 +135,7 @@ class VerleihServiceImpl extends AbstractObservableService implements
     {
         assert kundeImBestand(kunde): "Vorbedingung verletzt: kundeImBestand(kunde)";
         assert medienImBestand(medien) : "Vorbedingung verletzt: medienImBestand(medien))";
-        
+
         for (Medium medium : medien)
         {
             Verleihkarte karte = new Verleihkarte(kunde, medium, ausleihDatum);

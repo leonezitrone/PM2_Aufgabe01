@@ -1,0 +1,132 @@
+README
+
+## Aufgabe 1.2
+
+### 1.2.1
+``StartUpMediathek_Blatt01`` _> Run As > Java Application_
+
+
+#### Bereits implementierte Funktionen
+Es gibt bereits eine funktionierende Datenbank für **Kunden** und für **Medien**, die in den beiden jeweiligen GUI-Ansichten hinterlegt sind.
+Für die Kunden gibt es die Attribute _Kundennummer_ (``int``), _Nachname_ (``String``), _Vorname_ (``String``)
+Für die Medien gibt es die Attribute, _Medienttyp_ (``String``), _Titel_ (``String``), _Ausleihbar_ (``boolean``)
+
+Die Auswahl eines Kunden in der Liste ist per Linksklick möglich, in der Ansicht **Ausgewählter Kunde** aktualisiert sich die Anzeige eines Kunden mit einer ID (@...). Hier ist es sinnvoll ebenfalls die konkreten Kunden informationen Nachname, Vorname, Kundennummer anzuzeigen.
+
+Für die Medien ist die Auswahl noch nicht voll implementiert, es lässt sich zwar ein Medium anwählen, dieses wird aber nicht unter **Ausgewählte Medien** angezeigt.
+
+der Button **ausleihen** hat zwar bereits die Funktion deaktiviert zu werden, wenn die Ausleihe eines Mediums für einen ausgewählten Kunden nicht möglich ist, die Funktionalität dahinter ist aber noch nicht korrekt implementiert. 
+**Ausleihbar** schaltet nicht um und ein Medium kann für unterschiedliche Kunden mal ausleihbar sein, mal nicht, ohne einem erkennbaren Muster.
+
+#### Sinnvolle Funktionen
+
+Der Button **Ausleihe-Ansicht** hat ebenfalls noch keine Funktion implementiert.
+Hier wäre eine Ansicht pro Kunde über die ausgeliehenen Medien sinnvoll, mit folgenden Attributen:
+- Anzahl des jeweiligen Medientyps
+- Ausleihdatum und Rückgabefrist des jeweiligen Mediums
+- Verlängerbar und die Anzahl der Verlängerungen
+- Überschreiten der Ausleihfrist
+- angefallene Fristgebühren
+- davon abhängig, ob noch weitere Medien ausgehliehen werden dürfen
+
+Die **Kunden** sollten noch das Attribute Adresse erhalten, **Medien** könnten sinnvollerweise noch die Ergänzung einer Ausleihhistorie erhalten
+Desweiteren wären weitere Medientypen denkbar: Bücher, Spiele, Software etc.
+
+### 1.2.2
+
+#### Wie viele Test-Klassen gibt es?
+es gibt 14 Test-Klassen:
+AssertTest, AusleiheMedienFormatiererComparatorTest, CDTest, DatumTest, DVDTest, GeldbetragTest, KundenComparatorTest, KundennummerTest, KundenstammServiceImplTest, KundeTest, MedienbestandServiceImplTest, PLZTest, VerleihkarteTest, VerleihServiceImplTest
+
+#### Woran können die Klassen für die GUI erkannt werden?
+Klassen für die grafischen Komponenten sind durch die konkatenierte Zeichenkette "UI" erkennbar.
+
+#### Welche Dienstleistungen bietet ``VerleihService`` an
+
+VerleihService ist dafür zuständig Medien an Kunden zu verleihen.
+Dies wird durch die Ausstellung einer jeweils neuen Verleihkarte realisiert mit der Operation ``verleiheAnKunde``. Um diese Dienstleistung korrekt anzubieten, sind weitere Dienstleistungen impmentiert. So kann zunächst mithilfe von``istVerleihenMoeglich`` geprüft werden, ob das angefragte Medium zu Verfügung steht.
+Desweiteren sind verschieden Auskünfte möglich: 
+- ``getEntleiherFuer`` gibt an, welcher Kunde das Medium zur Zeit geliehen hat.
+- ``getAusgelieheneMedienFuer`` wiederum verrät welche Medien ein bestimmter Kunde momentan ausgeliehen hat.
+- Für ``getVerleihkarten`` wird eine Übersicht über aller momentan verliehenen Medien erzeugt.
+- Mit ``nimmZurueck`` werden ausgeliehene Medien eines Kunden wieder abgegeben. 
+- ``istVerliehen`` gibt für ein spezifisches Medium Auskunft, ob es momentan von einem Kunden geliehen ist.
+- ``sindAlleNichtVerliehen`` und ``sindAlleVerliehen`` geben jeweils Auskunft, ob insgesamt entweder keine Medien oder alle Medien verliehen sind.
+- ``kundeImBestand`` fragt in der Liste aller Kunden ab, ob der Kunde bereits geführt ist.
+- ``mediumImBestand`` sagt aus, ob eine bestimmtes Medium bereits in der Liste der Mediathek geführt ist, ``medienImBestand`` ermöglicht die gleiche Anfrage für mehrere Medien auf einmal.
+- ``getVerleihkartenFuer`` erwartet einen Kunden und gibt für diesen alle ausgestellten Verleihkarten zurück.
+- ``getVerleihkarteFuer`` erwartet ein Medium und gibt dann diese zurück, wenn es denn verliehen ist.
+
+### 1.2.3 UML-Klassendiagramm
+
+
+## Aufgabe 1.3
+### 1.3.1
+#### Das Dummy-Interface
+Die Dummy-Implementation ``DummyVerleihService`` dient dem Testen der visuellen UI-Elementen, die als StartUpMediathek sichtbar sind. Hierfür ist es noch nicht notwendig einen funktionierenden Kundenstamm und Medienbestand im Hintergrund zu haben, sondern das Interface ``VerleihService`` muss nur erfolgreich implementiert werden und mit Platzhaltern belegt werden. Dazu müssen alle Operationen angeboten werden und die geforderten Rückgabetypen erfüllen.
+
+Damit können grafische Buttons und ihr jeweiliger Status getestet werden. 
+
+Allerdings kann damit keine logisch-funktionale Testung der Funktionalität erfolgen, da zum Beispiel die Boolean-Rückgaben jeweils nur Zufallswerte sind.
+
+Desweiteren werden nicht die Vertragsbedingungen erfüllt. Zum Beispiel ist bei der Operation ``List<Medium> getAusgelieheneMedienFuer(Kunde kunde)`` die Vorbedingung, dass der Kunde auch im Bestand ist - dies wird bei der Dummy-Implementation nicht geprüft.
+Insgesamt haben die Operationen keine sich aufeinander berufende Funktionen, sodass die Abfragen zwar keine Fehler werfen, aber auch keine fachliche Implementation bieten.
+
+
+### 1.3.2
+_Outline > DummyVerleihService > Konstruktor > Rechtsklick > Open Call Hierarchy > erstelleServices()_
+
+Zeigt die Methoden, in denen ein Objekt von DummyVerleihService erstellt wird. Hier kann in Zeile 49 problemlos die Erzeugung eines neuen verleihService von
+
+``_verleihService = new DummyVerleihService`` 
+
+geändert werden in:
+
+``_verleihService = new VerleihServiceImpl``
+
+beide Klassen sind eine Implementation des Interfaces ``VerleihService`` und sind dementsprechend in der Nutzbarkeit äquivalent.
+
+### 1.3.3
+**Ausleihbar** verändert sich nicht, wenn der Button **ausleihen** ausgewählt wird.
+
+Dafür wird dieser nun schon korrekt ausgegraut, wenn ein Medium nicht ausleihbar ist
+
+
+## Aufgabe 1.4
+### 1.4.1
+Breakpoint
+- Doppelklick am linken Zeilenrand oder ``CRL + SHIFT + B``
+
+Debugger
+- Käfer Symbol > Switch zu Debugger Perspective
+- F6 StepOver, F5 StepInto
+
+Fehler
+- Verleihkarte karte bekommt eine Zuweisung, wird aber nicht in die Map ``_verleihkarten`` eingefügt
+
+Ein Debugger sollte eingesetzt werden, wenn eine Exception geworfen wird, das Programm unerwartetes Verhalten aufweist und die programmierende Person sich dieses nicht durch Stift und Papier erklären kann - also zur Lokalisierung und Behebung von Laufzeitfehlern.
+
+
+## Aufgabe 1.5
+### 1.5.1
+assertTrue > ein Medium sollte **istVerliehen** zurückgeben, wenn es verliehen wird
+
+### 1.5.2
+Für ein Medium wird die erzeugte Karte in der Map als Value hinzugefügt
+
+
+## Aufgabe 1.6
+### 1.6.2
+Vor-und Nachbedingungen werden im Schnittstellenkommentar einer Operation deklariert, damit die Vertragsinformationen für einen Klienten ersichtlich sind
+
+Die Überprüfung erfolgt innerhalb des Methodenrumpfes, der die Operation implementiert.
+Die Vorbedingungen sollten unmittelbar zu Beginn geprüft werden.
+Die Nachbedingungen sollten unmittelbar vor dem Rücksprung geprüft werden, allerdings nicht in PM2.
+
+### 1.6.3
+Beispiel ``istVerleihenMoeglich``:
+Wenn ``@require istVerliehen(medium)`` nicht eingehalten würde, wäre die Fachlichkeit des Verleihens nicht korrekt implementiert - es kann zu einem Programmfehler, also dem unerwarteten Verhalten der Software kommen. Die Boolesche Aussage, ob ein Medium verliehen ist wäre nicht verlässlich und ein Medium könnte bei der Anfrage zum Verleihen fälschlicherweise mehrfachverliehen werden.
+Damit würden mehrere Verleihkarten für ein Medium erstellt werden
+
+Beispiel ``medium``- oder ``kundeImBestand``:
+Wenn keine Prüfung auf ``null`` erfolgt, kann eine NullPointerException fliegen
