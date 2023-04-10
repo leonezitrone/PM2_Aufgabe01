@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,11 @@ interface MedienbestandService extends ObservableService
      * nachgefragt wird.
      * 
      * @param medium Ein zu entfernendes Medium
+     * @require enthaeltMedium(medium)
+     * @require medium != null
+     * 
+     * @ensure getMedien().size()--
+     * 
      */
     void entferneMedium(Medium medium);
 
@@ -29,6 +35,8 @@ interface MedienbestandService extends ObservableService
      * Gibt Auskunft, ob ein Medium im Medienbestand enthalten ist.
      * 
      * @param medium Ein Medium
+     * @require medium != null
+     * 
      * @return true, wenn Medium im Medienbestand enthalten ist, andernfalls
      *         false.
      */
@@ -41,11 +49,18 @@ interface MedienbestandService extends ObservableService
      * denselben Eigenschaften eingepflegt werden.
      * 
      * @param neuesMedium Ein neues Medium
+     * @require neuesMedium != null
+     * @require neuesMedium.instanceOf(DVD) || neuesMedium.instanceOf(CD))
+     * 
+     * @ensure getMedien().size()++
+     * @ensure enthaeltMedium(neuesMedium)
      */
     void fuegeMediumEin(Medium neuesMedium);
 
     /**
      * Liefert alle vorhandenen Medien.
+     * 
+     * @ensure ArrayList<Medium>(medien) != null
      * 
      * @return Eine Kopie der Liste mit allen vorhandenen Medien.
      */
@@ -55,6 +70,10 @@ interface MedienbestandService extends ObservableService
      * Informiert diesen Service darüber, dass Medien von einem Werkzeug
      * geändert wurden. Eine Implementation wird daraufhin wahrscheinlich alle
      * ServiceBeobachter darüber informieren.
+     * 
+     * @require _medienbestand geaendert
+     * @ensure Weitergabe an Servicebeobachter
+     * 
      */
     void medienWurdenGeaendert();
 
