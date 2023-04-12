@@ -44,7 +44,7 @@ public class VideospielTest
         assertFalse("Mehrere Exemplare des gleichen Videospiels sind ungleich",
                 _videospiel1.equals(_videospiel2));
         assertTrue("Dasselbe Exemplare des gleichen Videospiels ist gleich",
-                _videospiel1.equals(_videospiel2));
+                _videospiel1.equals(_videospiel1));
     }
 
     private Videospiel getMedium()

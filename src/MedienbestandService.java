@@ -26,7 +26,7 @@ interface MedienbestandService extends ObservableService
      * @require enthaeltMedium(medium)
      * @require medium != null
      * 
-     * @ensure getMedien().size()--
+     * @ensure getMedien().size()-- // !enthaeltMedium(medium)
      * 
      */
     void entferneMedium(Medium medium);
